@@ -87,7 +87,7 @@
 <meta name="description" content="一、Hexo简介Hexo 是一个快速、简洁且高效的博客框架，使用 Markdown解析文章，在几秒内，即可利用靓丽的主题生成静态网页。演示博客：https://juemuren4449.github.io官方文档：https://hexo.io/zh-cn/docs参考文档：http://jingyan.baidu.com/article/d8072ac47aca0fec95cefd2d.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo建站全攻略">
-<meta property="og:url" content="https://juemuren4449.github.io/2016/12/20/Hexo建站全攻略/index.html">
+<meta property="og:url" content="https://juemuren4449.com/2016/12/20/Hexo建站全攻略/index.html">
 <meta property="og:site_name" content="掘墓人">
 <meta property="og:description" content="一、Hexo简介Hexo 是一个快速、简洁且高效的博客框架，使用 Markdown解析文章，在几秒内，即可利用靓丽的主题生成静态网页。演示博客：https://juemuren4449.github.io官方文档：https://hexo.io/zh-cn/docs参考文档：http://jingyan.baidu.com/article/d8072ac47aca0fec95cefd2d.html">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/8ed3a39bjw1faxn1kppegj20id0cy424.jpg">
@@ -367,7 +367,7 @@
       
 
       
-        <h1 id="一、Hexo简介"><a href="#一、Hexo简介" class="headerlink" title="一、Hexo简介"></a>一、Hexo简介</h1><p>Hexo 是一个快速、简洁且高效的博客框架，使用 Markdown解析文章，在几秒内，即可利用靓丽的主题生成静态网页。<br>演示博客：<a href="https://juemuren4449.github.io">https://juemuren4449.github.io</a><br>官方文档：<a href="https://hexo.io/zh-cn/docs" target="_blank" rel="external">https://hexo.io/zh-cn/docs</a><br>参考文档：<a href="http://jingyan.baidu.com/article/d8072ac47aca0fec95cefd2d.html" target="_blank" rel="external">http://jingyan.baidu.com/article/d8072ac47aca0fec95cefd2d.html</a><br><a id="more"></a></p>
+        <h1 id="一、Hexo简介"><a href="#一、Hexo简介" class="headerlink" title="一、Hexo简介"></a>一、Hexo简介</h1><p>Hexo 是一个快速、简洁且高效的博客框架，使用 Markdown解析文章，在几秒内，即可利用靓丽的主题生成静态网页。<br>演示博客：<a href="https://juemuren4449.github.io" target="_blank" rel="external">https://juemuren4449.github.io</a><br>官方文档：<a href="https://hexo.io/zh-cn/docs" target="_blank" rel="external">https://hexo.io/zh-cn/docs</a><br>参考文档：<a href="http://jingyan.baidu.com/article/d8072ac47aca0fec95cefd2d.html" target="_blank" rel="external">http://jingyan.baidu.com/article/d8072ac47aca0fec95cefd2d.html</a><br><a id="more"></a></p>
 <h1 id="二、搭建流程（Windows）"><a href="#二、搭建流程（Windows）" class="headerlink" title="二、搭建流程（Windows）"></a>二、搭建流程（Windows）</h1><h2 id="1、准备工作"><a href="#1、准备工作" class="headerlink" title="1、准备工作"></a>1、准备工作</h2><h3 id="（1）、安装git"><a href="#（1）、安装git" class="headerlink" title="（1）、安装git"></a>（1）、安装git</h3><p>下载地址：<a href="https://git-scm.com/download" target="_blank" rel="external">https://git-scm.com/download</a><br>选择对应的平台，下载到本地，默认安装即可。</p>
 <h3 id="（2）、安装node-js"><a href="#（2）、安装node-js" class="headerlink" title="（2）、安装node.js"></a>（2）、安装node.js</h3><p>下载地址：<a href="https://nodejs.org/en" target="_blank" rel="external">https://nodejs.org/en</a><br>推荐下载LTS版，默认安装即可</p>
 <h2 id="2、安装hexo"><a href="#2、安装hexo" class="headerlink" title="2、安装hexo"></a>2、安装hexo</h2><p>在任意位置右键，选择Git Bash Here，然后输入</p>
@@ -399,7 +399,7 @@
 <h2 id="6、创建仓库"><a href="#6、创建仓库" class="headerlink" title="6、创建仓库"></a>6、创建仓库</h2><p>在github上创建博客的仓库，创建仓库地址：<a href="https://github.com/new" target="_blank" rel="external">https://github.com/new</a><br>例如我的github帐号名为juemuren4449，那么我的Repository的name就必须为<code>juemuren4449.github.io</code></p>
 <h2 id="7、修改配置文件"><a href="#7、修改配置文件" class="headerlink" title="7、修改配置文件"></a>7、修改配置文件</h2><h3 id="（1）、修改deploy"><a href="#（1）、修改deploy" class="headerlink" title="（1）、修改deploy"></a>（1）、修改deploy</h3><p>打开C:\Users\juemuren\myweb下的_config.yml文件，搜索deploy，修改为如下格式，其中repository就是刚才创建的仓库地址，需要注意的是每个字段后都有冒号，冒号后有一个英文的空格<br>修改如下所示：  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repository: https://github.com/juemuren4449/juemuren4449.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
-<h3 id="（2）、修改URL"><a href="#（2）、修改URL" class="headerlink" title="（2）、修改URL"></a>（2）、修改URL</h3><p>搜索ULR，将url替换成<a href="https://juemuren4449.github.io/">https://juemuren4449.github.io/</a>  </p>
+<h3 id="（2）、修改URL"><a href="#（2）、修改URL" class="headerlink" title="（2）、修改URL"></a>（2）、修改URL</h3><p>搜索ULR，将url替换成<a href="https://juemuren4449.github.io/" target="_blank" rel="external">https://juemuren4449.github.io/</a>  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># URL</div><div class="line">## If your site is put in a subdirectory, set url as &apos;http://yoursite.com/child&apos; and root as &apos;/child/&apos;</div><div class="line">url: https://juemuren4449.github.io</div></pre></td></tr></table></figure>
 <h2 id="8、设置SSH-keys"><a href="#8、设置SSH-keys" class="headerlink" title="8、设置SSH keys"></a>8、设置SSH keys</h2><h3 id="（1）、生成SHH-keys"><a href="#（1）、生成SHH-keys" class="headerlink" title="（1）、生成SHH keys"></a>（1）、生成SHH keys</h3><p>在Git Bash中输入下面的命令，查看是否生成过ssh，如果有则将<code>C:\Users\用户名</code>目录下的.ssh文件夹删除</p>
 <blockquote>
@@ -447,7 +447,7 @@
 <blockquote>
 <p>hexo deploy</p>
 </blockquote>
-<h2 id="10、访问博客"><a href="#10、访问博客" class="headerlink" title="10、访问博客"></a>10、访问博客</h2><p>在浏览器打开：<a href="https://juemuren4449.github.io/">https://juemuren4449.github.io/</a>  ，即可访问基于hexo的博客了！<br>PS：部署之后可能有延迟，请耐心等待。</p>
+<h2 id="10、访问博客"><a href="#10、访问博客" class="headerlink" title="10、访问博客"></a>10、访问博客</h2><p>在浏览器打开：<a href="https://juemuren4449.github.io/" target="_blank" rel="external">https://juemuren4449.github.io/</a>  ，即可访问基于hexo的博客了！<br>PS：部署之后可能有延迟，请耐心等待。</p>
 <h2 id="11、命令简化"><a href="#11、命令简化" class="headerlink" title="11、命令简化"></a>11、命令简化</h2><p>hexo的命令可以简写，如下：</p>
 <table>
 <thead>
@@ -534,7 +534,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2016/12/20/Hexo建站全攻略/"
-           data-title="Hexo建站全攻略" data-url="https://juemuren4449.github.io/2016/12/20/Hexo建站全攻略/">
+           data-title="Hexo建站全攻略" data-url="https://juemuren4449.com/2016/12/20/Hexo建站全攻略/">
       </div>
     
   </div>
