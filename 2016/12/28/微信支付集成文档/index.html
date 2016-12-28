@@ -103,7 +103,7 @@ APP支付又称移动端支付，是商户通过在移动端应用APP中集成�
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/8ed3a39bjw1fb53r53o0tj20ou0sytd0.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/8ed3a39bjw1fb53rxreghj20qh0kvn0u.jpg">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/8ed3a39bjw1fb53s1mpy9j20qi0oytd5.jpg">
-<meta property="og:updated_time" content="2016-12-28T07:19:04.476Z">
+<meta property="og:updated_time" content="2016-12-28T07:46:26.777Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微信支付集成文档">
 <meta name="twitter:description" content="一、开发前提
@@ -513,7 +513,37 @@ APP支付又称移动端支付，是商户通过在移动端应用APP中集成�
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;activity android:name=&quot;.wxapi.WXPayEntryActivity&quot;</div><div class="line">          android:exported=&quot;true&quot;</div><div class="line">          android:launchMode=&quot;singleTop&quot;/&gt;</div></pre></td></tr></table></figure>
 <p>在WXPayEntryActivity类中实现onResp函数，支付完成后，微信APP会返回到商户APP并回调onResp函数，开发者需要在该函数中接收通知，判断返回错误码，如果支付成功则去后台查询支付结果再展示用户实际支付结果。<br>注意一定不能以客户端返回作为用户支付的结果，应以服务器端的接收的支付通知或查询API返回的结果为准。代码示例如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public void onResp(BaseResp resp) &#123;</div><div class="line">    if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) &#123;</div><div class="line">        Log.e(&quot;resp.errCode=&quot;, resp.errCode + &quot;&quot;);</div><div class="line">        AlertDialog.Builder builder = new AlertDialog.Builder(this);</div><div class="line">        builder.setTitle(&quot;提示&quot;);</div><div class="line">        builder.setMessage(&quot;支付结果&quot; + String.valueOf(resp.errCode));</div><div class="line">        builder.show();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>回调中errCode值列表：<br>字段名 | 变量名 | 必填 | 类型 | 示例值 | 描述<br>— | — | — | — | — | — |<br>返回状态码 | return_code | 是 | String(16) | SUCCESS | SUCCESS/FAIL   SUCCESS表示商户接收通知成功并校验成功<br>返回信息 | return_msg | 否 | String(128) | OK | 返回信息，如非空，为错误原因：签名失败  参数格式校验错误</p>
+<p>回调中errCode值列表：</p>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>变量名</th>
+<th>必填</th>
+<th>类型</th>
+<th>示例值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>返回状态码</td>
+<td>return_code</td>
+<td>是</td>
+<td>String(16)</td>
+<td>SUCCESS</td>
+<td>SUCCESS/FAIL   SUCCESS表示商户接收通知成功并校验成功</td>
+</tr>
+<tr>
+<td>返回信息</td>
+<td>return_msg</td>
+<td>否</td>
+<td>String(128)</td>
+<td>OK</td>
+<td>返回信息，如非空，为错误原因：签名失败  参数格式校验错误</td>
+</tr>
+</tbody>
+</table>
 <h2 id="4、注意事项-1"><a href="#4、注意事项-1" class="headerlink" title="4、注意事项"></a>4、注意事项</h2><p>实际支付结果一定不能以客户端返回作为用户支付的结果，应以服务器端的接收的支付通知或查询API返回的结果为准。</p>
 <p>确认debug或者打包运行的程序签名与微信开发平台设置的签名一致（使用下面任意一种方法）：<br>①、可以设置后台的签名为debug包的签名，这样每次直接运行即可，待程序发布之前再将签名修改为正式包的签名<br>②、若使用的正式包的签名，则每次都要打包运行，或者可以在build.gradle中的android标签中添加下面的代码（推荐）：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">signingConfigs &#123;</div><div class="line">    debug &#123;</div><div class="line">        storeFile file(&quot;正式keystore的路径&quot;)</div><div class="line">        storePassword &quot;密码&quot;</div><div class="line">        keyAlias &quot;别名&quot;</div><div class="line">        keyPassword &quot;密码&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
