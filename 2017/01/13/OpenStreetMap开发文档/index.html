@@ -1,0 +1,983 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="OpenStreetMap,osmdroid,地图," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="前言
+OpenStreetMap社区是一个由地图制作爱好者组成的社区，这些爱好者提供并维护世界各地关于道路、小道、咖啡馆、铁路车站等各种各样的数据。OpenStreetMap开源项目可以让程序开发更加灵活，图源更加丰富，例如可以使用谷歌地图，以解决国内无法使用谷歌服务的尴尬。国内户外导航软件，例如：行者、户外帮和小狼信标都使用了OpenStreetMap。
+
+Android版OpenStreetM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenStreetMap开发文档">
+<meta property="og:url" content="https://juemuren4449.com/2017/01/13/OpenStreetMap开发文档/index.html">
+<meta property="og:site_name" content="掘墓人">
+<meta property="og:description" content="前言
+OpenStreetMap社区是一个由地图制作爱好者组成的社区，这些爱好者提供并维护世界各地关于道路、小道、咖啡馆、铁路车站等各种各样的数据。OpenStreetMap开源项目可以让程序开发更加灵活，图源更加丰富，例如可以使用谷歌地图，以解决国内无法使用谷歌服务的尴尬。国内户外导航软件，例如：行者、户外帮和小狼信标都使用了OpenStreetMap。
+
+Android版OpenStreetM">
+<meta property="og:updated_time" content="2017-01-12T16:05:34.004Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenStreetMap开发文档">
+<meta name="twitter:description" content="前言
+OpenStreetMap社区是一个由地图制作爱好者组成的社区，这些爱好者提供并维护世界各地关于道路、小道、咖啡馆、铁路车站等各种各样的数据。OpenStreetMap开源项目可以让程序开发更加灵活，图源更加丰富，例如可以使用谷歌地图，以解决国内无法使用谷歌服务的尴尬。国内户外导航软件，例如：行者、户外帮和小狼信标都使用了OpenStreetMap。
+
+Android版OpenStreetM">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> OpenStreetMap开发文档 | 掘墓人 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?a0455cf37dbfbb725cfd74fa9e1d3eaf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">掘墓人</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Where my world build.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                OpenStreetMap开发文档
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-13T00:00:11+08:00" content="2017-01-13">
+              2017-01-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/地图/" itemprop="url" rel="index">
+                    <span itemprop="name">地图</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/13/OpenStreetMap开发文档/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/13/OpenStreetMap开发文档/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/13/OpenStreetMap开发文档/" class="leancloud_visitors" data-flag-title="OpenStreetMap开发文档">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>OpenStreetMap社区是一个由地图制作爱好者组成的社区，这些爱好者提供并维护世界各地关于道路、小道、咖啡馆、铁路车站等各种各样的数据。<br>OpenStreetMap开源项目可以让程序开发更加灵活，图源更加丰富，例如可以使用谷歌地图，以解决国内无法使用谷歌服务的尴尬。<br>国内户外导航软件，例如：<a href="http://www.imxingzhe.com/" target="_blank" rel="external"><strong>行者</strong></a>、<a href="https://www.banghw.com/" target="_blank" rel="external"><strong>户外帮</strong></a>和<a href="http://www.telewolves.com/" target="_blank" rel="external"><strong>小狼信标</strong></a>都使用了OpenStreetMap。</p>
+</blockquote>
+<p>Android版OpenStreetMap的github地址：<a href="https://github.com/osmdroid/osmdroid" target="_blank" rel="external">osmdroid</a><br><a id="more"></a><br><em>5.2地图缓存的是瓦片，5.4之后地图缓存到数据库</em></p>
+<h1 id="一、环境配置"><a href="#一、环境配置" class="headerlink" title="一、环境配置"></a>一、环境配置</h1><h2 id="1、Gradle中添加依赖"><a href="#1、Gradle中添加依赖" class="headerlink" title="1、Gradle中添加依赖"></a>1、Gradle中添加依赖</h2><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">compile</span> <span class="string">'org.osmdroid:osmdroid-android:5.2@aar'</span></div></pre></td></tr></table></figure>
+<h2 id="2、权限配置"><a href="#2、权限配置" class="headerlink" title="2、权限配置"></a>2、权限配置</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.INTERNET"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.WRITE_EXTERNAL_STORAGE"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.READ_EXTERNAL_STORAGE"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>提示：编译版本为23或以上版本，要注意动态获取读写存储空间权限，否则地图可能不显示</p>
+</blockquote>
+<h1 id="二、基础MapView使用"><a href="#二、基础MapView使用" class="headerlink" title="二、基础MapView使用"></a>二、基础MapView使用</h1><h2 id="1、使用内置地图源"><a href="#1、使用内置地图源" class="headerlink" title="1、使用内置地图源"></a>1、使用内置地图源</h2><h3 id="（1）、在布局文件中添加MapView控件，在代码中找到控件并设置图源"><a href="#（1）、在布局文件中添加MapView控件，在代码中找到控件并设置图源" class="headerlink" title="（1）、在布局文件中添加MapView控件，在代码中找到控件并设置图源"></a>（1）、在布局文件中添加MapView控件，在代码中找到控件并设置图源</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">org.osmdroid.views.MapView</span></span></div><div class="line">     <span class="attr">android:id</span>=<span class="string">"@+id/mapView"</span></div><div class="line">     <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">     <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>/&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">MapView mMapView= (MapView) findViewById(R.id.mapView);</div><div class="line">mMapView.setTileSource(TileSourceFactory.CYCLEMAP);<span class="comment">//（OCM等高）若不设置，则默认使用的是MAPNIK（OSM街道）</span></div></pre></td></tr></table></figure>
+<h3 id="（2）、直接在代码中new-MapView，然后设置图源，并将MapView添加到父布局中"><a href="#（2）、直接在代码中new-MapView，然后设置图源，并将MapView添加到父布局中" class="headerlink" title="（2）、直接在代码中new MapView，然后设置图源，并将MapView添加到父布局中"></a>（2）、直接在代码中new MapView，然后设置图源，并将MapView添加到父布局中</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">MapView mMapView=<span class="keyword">new</span> MapView(<span class="keyword">this</span>);</div><div class="line">mMapView.setTileSource(TileSourceFactory.MAPNIK);</div></pre></td></tr></table></figure>
+<h2 id="2、设置其他地图源"><a href="#2、设置其他地图源" class="headerlink" title="2、设置其他地图源"></a>2、设置其他地图源</h2><h3 id="（1）、谷歌图源"><a href="#（1）、谷歌图源" class="headerlink" title="（1）、谷歌图源"></a>（1）、谷歌图源</h3><h4 id="a、新建一个谷歌图源类，继承OnlineTileSourceBase"><a href="#a、新建一个谷歌图源类，继承OnlineTileSourceBase" class="headerlink" title="a、新建一个谷歌图源类，继承OnlineTileSourceBase"></a>a、新建一个谷歌图源类，继承OnlineTileSourceBase</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GoogleMapsTileSource</span> <span class="keyword">extends</span> <span class="title">OnlineTileSourceBase</span> </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * <span class="doctag">@param</span> aName                a human-friendly name for this tile source  自定图源义名字，会在手机外部存储中新建以该名字命名的文件夹，瓦片存储在其中</div><div class="line">     * <span class="doctag">@param</span> aZoomMinLevel        the minimum zoom level this tile source can provide  最小缩放级别</div><div class="line">     * <span class="doctag">@param</span> aZoomMaxLevel        the maximum zoom level this tile source can provide  最大缩放级别</div><div class="line">     * <span class="doctag">@param</span> aTileSizePixels      the tile size in pixels this tile source provides  瓦片质量 （256）</div><div class="line">     * <span class="doctag">@param</span> aImageFilenameEnding the file name extension used when constructing the filename  瓦片格式（jpg[有损压缩率高、不透明]、png[无损、透明]）</div><div class="line">     * <span class="doctag">@param</span> aBaseUrl             the base url(s) of the tile server used when constructing the url to download the tiles  下载瓦片的链接（前缀）</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">GoogleMapsTileSource</span><span class="params">(String aName, <span class="keyword">int</span> aZoomMinLevel, <span class="keyword">int</span> aZoomMaxLevel, <span class="keyword">int</span> aTileSizePixels, String aImageFilenameEnding, String[] aBaseUrl)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(aName, aZoomMinLevel, aZoomMaxLevel, aTileSizePixels, aImageFilenameEnding, aBaseUrl);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getTileURLString</span><span class="params">(MapTile aTile)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> getBaseUrl() + <span class="string">"&amp;x="</span> + aTile.getX() + <span class="string">"&amp;y="</span> + aTile.getY() + <span class="string">"&amp;z="</span> + aTile.getZoomLevel();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="b、new一个谷歌图源对象，并设置MapView图源"><a href="#b、new一个谷歌图源对象，并设置MapView图源" class="headerlink" title="b、new一个谷歌图源对象，并设置MapView图源"></a>b、new一个谷歌图源对象，并设置MapView图源</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">String str1 = <span class="string">"http://mt0.google.cn/vt/lyrs=m&amp;hl=zh-CN&amp;gl=cn&amp;scale=2"</span>;</div><div class="line">String str2 = <span class="string">"http://mt1.google.cn/vt/lyrs=m&amp;hl=zh-CN&amp;gl=cn&amp;scale=2"</span>;</div><div class="line">String str3 = <span class="string">"http://mt2.google.cn/vt/lyrs=m&amp;hl=zh-CN&amp;gl=cn&amp;scale=2"</span>;</div><div class="line">String str4 = <span class="string">"http://mt3.google.cn/vt/lyrs=m&amp;hl=zh-CN&amp;gl=cn&amp;scale=2"</span>;</div><div class="line">GoogleMapsTileSource googleMapsTileSource = <span class="keyword">new</span> GoogleMapsTileSource(<span class="string">"GoogleNormal"</span>, <span class="number">2</span>, <span class="number">19</span>, <span class="number">256</span>, <span class="string">".png"</span>, <span class="keyword">new</span> String[]&#123;str1, str2, str3, str4&#125;);</div><div class="line">mMapView.setTileSource(googleMapsTileSource);</div></pre></td></tr></table></figure>
+<h3 id="（2）、必应等图源，使用方法类似于谷歌图源"><a href="#（2）、必应等图源，使用方法类似于谷歌图源" class="headerlink" title="（2）、必应等图源，使用方法类似于谷歌图源"></a>（2）、必应等图源，使用方法类似于谷歌图源</h3><blockquote>
+<p>参考文档：<a href="http://blog.csdn.net/youngkingyj/article/details/23365849" target="_blank" rel="external">http://blog.csdn.net/youngkingyj/article/details/23365849</a></p>
+</blockquote>
+<h2 id="3、让瓦片适应不同像素密度"><a href="#3、让瓦片适应不同像素密度" class="headerlink" title="3、让瓦片适应不同像素密度"></a>3、让瓦片适应不同像素密度</h2><blockquote>
+<p>默认地图显示的字体小，图片像素高，可设置以下代码，使地图适应不同像素密度，更美观</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mMapView.setTilesScaledToDpi(<span class="keyword">true</span>);</div></pre></td></tr></table></figure>
+<h2 id="4、添加指南针"><a href="#4、添加指南针" class="headerlink" title="4、添加指南针"></a>4、添加指南针</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">CompassOverlay mCompassOverlay = <span class="keyword">new</span> CompassOverlay(MainActivity.<span class="keyword">this</span>, <span class="keyword">new</span> InternalCompassOrientationProvider(MainActivity.<span class="keyword">this</span>), mMapView);</div><div class="line">mMapView.getOverlays().add(mCompassOverlay);</div><div class="line">mCompassOverlay.enableCompass();</div></pre></td></tr></table></figure>
+<blockquote>
+<p>按此方法添加指南针之后，部分手机仍不显示指南针，原因未知</p>
+</blockquote>
+<h2 id="5、添加比例尺"><a href="#5、添加比例尺" class="headerlink" title="5、添加比例尺"></a>5、添加比例尺</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ScaleBarOverlay mScaleBarOverlay = <span class="keyword">new</span> ScaleBarOverlay(mMapView);</div><div class="line">mMapView.getOverlays().add(mScaleBarOverlay);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>添加上面代码后，比例尺显示在左上角，而且不美观，可以继续添加下面代码，使比例尺显示在左下角</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mScaleBarOverlay.setAlignBottom(<span class="keyword">true</span>);</div><div class="line">mScaleBarOverlay.setLineWidth(<span class="number">1</span> * (getResources().getDisplayMetrics()).density);</div><div class="line">mScaleBarOverlay.setMaxLength(<span class="number">0.85f</span>);</div></pre></td></tr></table></figure>
+<h2 id="6、设置地图中心"><a href="#6、设置地图中心" class="headerlink" title="6、设置地图中心"></a>6、设置地图中心</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">GeoPoint geopoint = <span class="keyword">new</span> GeoPoint(<span class="number">39.986250</span>, <span class="number">116.400025</span>);</div><div class="line">MapController mMapController= (MapController) mMapView.getController();<span class="comment">//获取MapView控制器</span></div><div class="line">mMapController.setCenter(geopoint);<span class="comment">//设置地图中心</span></div></pre></td></tr></table></figure>
+<h2 id="7、其他设置"><a href="#7、其他设置" class="headerlink" title="7、其他设置"></a>7、其他设置</h2><h3 id="（1）、设置缩放界别"><a href="#（1）、设置缩放界别" class="headerlink" title="（1）、设置缩放界别"></a>（1）、设置缩放界别</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mMapController.setZoom(<span class="number">15</span>);<span class="comment">//设置缩放级别</span></div></pre></td></tr></table></figure>
+<h3 id="（2）、设置缩放按钮可见"><a href="#（2）、设置缩放按钮可见" class="headerlink" title="（2）、设置缩放按钮可见"></a>（2）、设置缩放按钮可见</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mMapView.setBuiltInZoomControls(<span class="keyword">true</span>);<span class="comment">//设置缩放按钮可见</span></div></pre></td></tr></table></figure>
+<h3 id="（3）、设置多指触控可用"><a href="#（3）、设置多指触控可用" class="headerlink" title="（3）、设置多指触控可用"></a>（3）、设置多指触控可用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mMapView.setMultiTouchControls(<span class="keyword">true</span>);<span class="comment">//设置多指触控可用</span></div></pre></td></tr></table></figure>
+<h3 id="（4）、关闭硬件加速"><a href="#（4）、关闭硬件加速" class="headerlink" title="（4）、关闭硬件加速"></a>（4）、关闭硬件加速</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mMapView.setLayerType(View.LAYER_TYPE_SOFTWARE, <span class="keyword">null</span>);<span class="comment">//关闭硬件加速(绘制轨迹时需要)</span></div></pre></td></tr></table></figure>
+<h3 id="（5）、地图可旋转"><a href="#（5）、地图可旋转" class="headerlink" title="（5）、地图可旋转"></a>（5）、地图可旋转</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RotationGestureOverlay mRotationGestureOverlay = <span class="keyword">new</span> RotationGestureOverlay(<span class="keyword">this</span>, mMapView);</div><div class="line">mRotationGestureOverlay.setEnabled(<span class="keyword">true</span>);</div><div class="line">mMapView.getOverlays().add(mRotationGestureOverlay);</div></pre></td></tr></table></figure>
+<h1 id="三、进阶使用"><a href="#三、进阶使用" class="headerlink" title="三、进阶使用"></a>三、进阶使用</h1><h2 id="1、自定义瓦片缓存位置"><a href="#1、自定义瓦片缓存位置" class="headerlink" title="1、自定义瓦片缓存位置"></a>1、自定义瓦片缓存位置</h2><p>默认会在外部存储中新建名为somdroid的文件夹，瓦片就存储在其中。</p>
+<p>自定义缓存位置就是在外部存储中创建一个文件夹，然后设置为瓦片的缓存位置，放在MapView初始化之前<br>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">File dir = <span class="keyword">new</span> File(Environment.getExternalStorageDirectory(), <span class="string">"AAA"</span>);<span class="comment">//新建文件夹</span></div><div class="line"><span class="keyword">if</span> (dir.exists()) &#123;</div><div class="line">    File nomedia = <span class="keyword">new</span> File(dir.getAbsoluteFile() + <span class="string">"/.nomedia"</span>);</div><div class="line">    <span class="keyword">if</span> (!nomedia.exists()) &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            nomedia.createNewFile();</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    dir.mkdirs();</div><div class="line">    File file = dir.getAbsoluteFile();</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        <span class="keyword">new</span> File(file + <span class="string">"/.nomedia"</span>).createNewFile();</div><div class="line">    &#125; <span class="keyword">catch</span> (Exception ex) &#123;</div><div class="line">        android.util.Log.e(IMapView.LOGTAG, <span class="string">"unable to create a nomedia file. downloaded tiles may be visible to the gallery."</span>, ex);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">OpenStreetMapTileProviderConstants.setCachePath(dir + <span class="string">""</span>);<span class="comment">//设置MapView的缓存路径</span></div></pre></td></tr></table></figure>
+<h2 id="2、添加Marker"><a href="#2、添加Marker" class="headerlink" title="2、添加Marker"></a>2、添加Marker</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Marker marker = <span class="keyword">new</span> Marker(mMapView);</div><div class="line">marker.setIcon(getResources().getDrawable(R.mipmap.ic_launcher));<span class="comment">//设置图标</span></div><div class="line">marker.setPosition(geopoint);<span class="comment">//设置位置</span></div><div class="line">marker.setAnchor(<span class="number">0.5f</span>, <span class="number">0.5f</span>);<span class="comment">//设置偏移量</span></div><div class="line">marker.setTitle(<span class="string">"我是Titile"</span>);<span class="comment">//设置标题</span></div><div class="line">marker.setSubDescription(<span class="string">"我是SubDescription"</span>);<span class="comment">//设置说明</span></div><div class="line">mMapView.getOverlays().add(marker);<span class="comment">//添加marker到MapView</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>点击Marker之后会出现气泡，显示title和subDescription</p>
+</blockquote>
+<h2 id="3、连线"><a href="#3、连线" class="headerlink" title="3、连线"></a>3、连线</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PathOverlay pathOverlay = <span class="keyword">new</span> PathOverlay(Color.BLUE, <span class="number">10</span>, <span class="keyword">this</span>);</div><div class="line">pathOverlay.addPoint(<span class="keyword">new</span> GeoPoint(<span class="number">39.986250</span>, <span class="number">116.400025</span>));</div><div class="line">pathOverlay.addPoint(<span class="keyword">new</span> GeoPoint(<span class="number">39.886250</span>, <span class="number">116.300025</span>));</div><div class="line">mMapView.getOverlays().add(pathOverlay);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>连线时务必关闭硬件加速，否则可能显示不出来连的线</p>
+</blockquote>
+<h2 id="4、离线地图下载"><a href="#4、离线地图下载" class="headerlink" title="4、离线地图下载"></a>4、离线地图下载</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">CacheManager cacheManager = <span class="keyword">new</span> CacheManager(mMapView);<span class="comment">//获取下载器</span></div><div class="line">        BoundingBoxE6 boundingBoxE6 = mMapView.getBoundingBox();<span class="comment">//获取当前区域</span></div><div class="line">        <span class="keyword">int</span> tileNum = cacheManager.possibleTilesInArea(boundingBoxE6, <span class="number">8</span>, <span class="number">16</span>);<span class="comment">//计算当前区域8-16级的瓦片数量</span></div><div class="line">        cacheManager.downloadAreaAsync(<span class="keyword">this</span>, boundingBoxE6, <span class="number">8</span>, <span class="number">16</span>, <span class="keyword">new</span> CacheManager.CacheManagerCallback() &#123;<span class="comment">//下载</span></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTaskComplete</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="comment">//下载完成后的回调</span></div><div class="line">            &#125;</div><div class="line">        &#125;);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>下载时会有进度框，若点击进度框以外的区域会取消下载，若想修改逻辑可参考CacheManager，自定义一个CacheManage</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OpenStreetMap/" rel="tag">#OpenStreetMap</a>
+          
+            <a href="/tags/osmdroid/" rel="tag">#osmdroid</a>
+          
+            <a href="/tags/地图/" rel="tag">#地图</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/05/文件管理器--Solid Explorer2/" rel="next" title="文件管理器--Solid Explorer2">
+                <i class="fa fa-chevron-left"></i> 文件管理器--Solid Explorer2
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/01/13/OpenStreetMap开发文档/"
+           data-title="OpenStreetMap开发文档" data-url="https://juemuren4449.com/2017/01/13/OpenStreetMap开发文档/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/mouse.jpg"
+               alt="juemuren4449" />
+          <p class="site-author-name" itemprop="name">juemuren4449</p>
+          <p class="site-description motion-element" itemprop="description">Android开发一枚</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/juemuren4449" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/juemuren4449" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一、环境配置"><span class="nav-text">一、环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、Gradle中添加依赖"><span class="nav-text">1、Gradle中添加依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、权限配置"><span class="nav-text">2、权限配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、基础MapView使用"><span class="nav-text">二、基础MapView使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、使用内置地图源"><span class="nav-text">1、使用内置地图源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）、在布局文件中添加MapView控件，在代码中找到控件并设置图源"><span class="nav-text">（1）、在布局文件中添加MapView控件，在代码中找到控件并设置图源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）、直接在代码中new-MapView，然后设置图源，并将MapView添加到父布局中"><span class="nav-text">（2）、直接在代码中new MapView，然后设置图源，并将MapView添加到父布局中</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、设置其他地图源"><span class="nav-text">2、设置其他地图源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）、谷歌图源"><span class="nav-text">（1）、谷歌图源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a、新建一个谷歌图源类，继承OnlineTileSourceBase"><span class="nav-text">a、新建一个谷歌图源类，继承OnlineTileSourceBase</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b、new一个谷歌图源对象，并设置MapView图源"><span class="nav-text">b、new一个谷歌图源对象，并设置MapView图源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）、必应等图源，使用方法类似于谷歌图源"><span class="nav-text">（2）、必应等图源，使用方法类似于谷歌图源</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、让瓦片适应不同像素密度"><span class="nav-text">3、让瓦片适应不同像素密度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、添加指南针"><span class="nav-text">4、添加指南针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、添加比例尺"><span class="nav-text">5、添加比例尺</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、设置地图中心"><span class="nav-text">6、设置地图中心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7、其他设置"><span class="nav-text">7、其他设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）、设置缩放界别"><span class="nav-text">（1）、设置缩放界别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）、设置缩放按钮可见"><span class="nav-text">（2）、设置缩放按钮可见</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（3）、设置多指触控可用"><span class="nav-text">（3）、设置多指触控可用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（4）、关闭硬件加速"><span class="nav-text">（4）、关闭硬件加速</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（5）、地图可旋转"><span class="nav-text">（5）、地图可旋转</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、进阶使用"><span class="nav-text">三、进阶使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、自定义瓦片缓存位置"><span class="nav-text">1、自定义瓦片缓存位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、添加Marker"><span class="nav-text">2、添加Marker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、连线"><span class="nav-text">3、连线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、离线地图下载"><span class="nav-text">4、离线地图下载</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">juemuren4449</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"juemuren4449"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("04oKQQMvdHYFw2mSSmuLqNg1-gzGzoHsz", "21xOoFQmLbKxX3EELvxddk3X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
