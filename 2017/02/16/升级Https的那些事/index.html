@@ -1,0 +1,950 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Https,Http,Volley," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一、为什么升级Https1、苹果iOS强制开启ATS标准苹果宣布2017年1月1日起，所有提交到App Store 的App必须强制开启ATS安全标准(App Transport Security)，所有连接必须使用Https加密。（后延期了，具体日期还没确定，详情见：https://developer.apple.com/news/?id=12212016b）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="升级Https的那些事">
+<meta property="og:url" content="https://juemuren4449.com/2017/02/16/升级Https的那些事/index.html">
+<meta property="og:site_name" content="掘墓人">
+<meta property="og:description" content="一、为什么升级Https1、苹果iOS强制开启ATS标准苹果宣布2017年1月1日起，所有提交到App Store 的App必须强制开启ATS安全标准(App Transport Security)，所有连接必须使用Https加密。（后延期了，具体日期还没确定，详情见：https://developer.apple.com/news/?id=12212016b）">
+<meta property="og:updated_time" content="2017-02-16T13:29:31.876Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="升级Https的那些事">
+<meta name="twitter:description" content="一、为什么升级Https1、苹果iOS强制开启ATS标准苹果宣布2017年1月1日起，所有提交到App Store 的App必须强制开启ATS安全标准(App Transport Security)，所有连接必须使用Https加密。（后延期了，具体日期还没确定，详情见：https://developer.apple.com/news/?id=12212016b）">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 升级Https的那些事 | 掘墓人 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?a0455cf37dbfbb725cfd74fa9e1d3eaf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">掘墓人</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Where my world build.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                升级Https的那些事
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-16T21:16:45+08:00" content="2017-02-16">
+              2017-02-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/第三方集成/" itemprop="url" rel="index">
+                    <span itemprop="name">第三方集成</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/16/升级Https的那些事/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/16/升级Https的那些事/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/16/升级Https的那些事/" class="leancloud_visitors" data-flag-title="升级Https的那些事">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、为什么升级Https"><a href="#一、为什么升级Https" class="headerlink" title="一、为什么升级Https"></a>一、为什么升级Https</h1><h2 id="1、苹果iOS强制开启ATS标准"><a href="#1、苹果iOS强制开启ATS标准" class="headerlink" title="1、苹果iOS强制开启ATS标准"></a>1、苹果iOS强制开启ATS标准</h2><p>苹果宣布2017年1月1日起，所有提交到App Store 的App必须强制开启ATS安全标准(App Transport Security)，所有连接必须使用Https加密。（后延期了，具体日期还没确定，详情见：<a href="https://developer.apple.com/news/?id=12212016b）" target="_blank" rel="external">https://developer.apple.com/news/?id=12212016b）</a><br><a id="more"></a></p>
+<h2 id="2、Http协议无法加密数据"><a href="#2、Http协议无法加密数据" class="headerlink" title="2、Http协议无法加密数据"></a>2、Http协议无法加密数据</h2><p>Http明文协议的缺陷，是导致数据泄露、数据篡改、流量劫持、钓鱼攻击等安全问题的重要原因。Http协议无法加密数据，所有通信数据都在网络中明文“裸奔”，通过网络的嗅探设备及一些技术手段，就可还原Http报文内容。</p>
+<h1 id="二、证书申请"><a href="#二、证书申请" class="headerlink" title="二、证书申请"></a>二、证书申请</h1><h2 id="1、货比三家"><a href="#1、货比三家" class="headerlink" title="1、货比三家"></a>1、货比三家</h2><h3 id="（1）、赛门铁克"><a href="#（1）、赛门铁克" class="headerlink" title="（1）、赛门铁克"></a>（1）、赛门铁克</h3><p>优点：国际大厂，信誉保证<br>缺点：证书价格太贵，购买售后全为英文，不方便</p>
+<h3 id="（2）、沃通"><a href="#（2）、沃通" class="headerlink" title="（2）、沃通"></a>（2）、沃通</h3><p>优点：价格公道，国内多家网站使用，中文网站及客服<br>缺点：最便宜的证书不是沃通直接颁发</p>
+<h3 id="（3）、免费SSL"><a href="#（3）、免费SSL" class="headerlink" title="（3）、免费SSL"></a>（3）、免费SSL</h3><p>优点：免费，申请快<br>缺点：不适合企业使用</p>
+<h2 id="2、购买"><a href="#2、购买" class="headerlink" title="2、购买"></a>2、购买</h2><p>综合考虑，个人可以考虑申请免费SSL，企业申请沃通的SSL</p>
+<blockquote>
+<p>购买地址：<a href="http://www.wosign.com/price.htm" target="_blank" rel="external">http://www.wosign.com/price.htm</a></p>
+</blockquote>
+<h1 id="三、服务器配置证书（基于Wildfly（Jboss））"><a href="#三、服务器配置证书（基于Wildfly（Jboss））" class="headerlink" title="三、服务器配置证书（基于Wildfly（Jboss））"></a>三、服务器配置证书（基于Wildfly（Jboss））</h1><blockquote>
+<p>参考文档：<a href="http://www.cnblogs.com/maximo/p/5775627.html" target="_blank" rel="external">http://www.cnblogs.com/maximo/p/5775627.html</a></p>
+<h2 id="1、配置证书"><a href="#1、配置证书" class="headerlink" title="1、配置证书"></a>1、配置证书</h2><p>找到Wildfly的配置文件路径 wildfly9\standalone\configuration\standalone.xml<br>，在应用域加入keystore信息，并将证书（juemuren.com.jks）复制到同目录下，如下：</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">security-realm</span> <span class="attr">name</span>=<span class="string">"ApplicationRealm"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">authentication</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">local</span> <span class="attr">default-user</span>=<span class="string">"$local"</span> <span class="attr">allowed-users</span>=<span class="string">"*"</span> <span class="attr">skip-group-loading</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">properties</span> <span class="attr">path</span>=<span class="string">"application-users.properties"</span> <span class="attr">relative-to</span>=<span class="string">"jboss.server.config.dir"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">authentication</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">authorization</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">properties</span> <span class="attr">path</span>=<span class="string">"application-roles.properties"</span> <span class="attr">relative-to</span>=<span class="string">"jboss.server.config.dir"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">authorization</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">security-realm</span>&gt;</span></div><div class="line"><span class="comment">&lt;!--以下为新增--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">security-realm</span> <span class="attr">name</span>=<span class="string">"SslRealm"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">server-identities</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">ssl</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">keystore</span> <span class="attr">path</span>=<span class="string">"juemuren.com.jks"</span> <span class="attr">relative-to</span>=<span class="string">"jboss.server.config.dir"</span> <span class="attr">keystore-password</span>=<span class="string">"123456"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">ssl</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">server-identities</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">security-realm</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="2、配置https监听"><a href="#2、配置https监听" class="headerlink" title="2、配置https监听"></a>2、配置https监听</h2><p>wildfly9\standalone\configuration\standalone.xml<br>，在应用域加入<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">subsystem</span> <span class="attr">xmlns</span>=<span class="string">"urn:jboss:domain:undertow:3.0"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">buffer-cache</span> <span class="attr">name</span>=<span class="string">"default"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">server</span> <span class="attr">name</span>=<span class="string">"default-server"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">http-listener</span> <span class="attr">name</span>=<span class="string">"default"</span> <span class="attr">socket-binding</span>=<span class="string">"http"</span> <span class="attr">redirect-socket</span>=<span class="string">"https"</span>/&gt;</span></div><div class="line">        <span class="comment">&lt;!--以下为新增--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">https-listener</span> <span class="attr">name</span>=<span class="string">"https"</span> <span class="attr">security-realm</span>=<span class="string">"SslRealm"</span> <span class="attr">socket-binding</span>=<span class="string">"https"</span>/&gt;</span></div><div class="line">        </div><div class="line">        <span class="tag">&lt;<span class="name">host</span> <span class="attr">name</span>=<span class="string">"default-host"</span> <span class="attr">alias</span>=<span class="string">"localhost"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">location</span> <span class="attr">name</span>=<span class="string">"/"</span> <span class="attr">handler</span>=<span class="string">"welcome-content"</span>/&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">filter-ref</span> <span class="attr">name</span>=<span class="string">"server-header"</span>/&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">filter-ref</span> <span class="attr">name</span>=<span class="string">"x-powered-by-header"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">host</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">server</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">servlet-container</span> <span class="attr">name</span>=<span class="string">"default"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">jsp-config</span> <span class="attr">development</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">servlet-container</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">handlers</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">file</span> <span class="attr">name</span>=<span class="string">"welcome-content"</span> <span class="attr">path</span>=<span class="string">"$&#123;jboss.home.dir&#125;/welcome-content"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">handlers</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">filters</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">response-header</span> <span class="attr">name</span>=<span class="string">"server-header"</span> <span class="attr">header-name</span>=<span class="string">"Server"</span> <span class="attr">header-value</span>=<span class="string">"WildFly/10"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">response-header</span> <span class="attr">name</span>=<span class="string">"x-powered-by-header"</span> <span class="attr">header-name</span>=<span class="string">"X-Powered-By"</span> <span class="attr">header-value</span>=<span class="string">"Undertow/1"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">filters</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">subsystem</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h2 id="3、设置http跳转https"><a href="#3、设置http跳转https" class="headerlink" title="3、设置http跳转https"></a>3、设置http跳转https</h2><h3 id="（1）、全局自动监听"><a href="#（1）、全局自动监听" class="headerlink" title="（1）、全局自动监听"></a>（1）、全局自动监听</h3><p>修改wildfly9/standalone/deployments/juemuren.com.war/WEB-INF\web.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">security-constraint</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">web-resource-collection</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">web-resource-name</span>&gt;</span>juemuren.com<span class="tag">&lt;/<span class="name">web-resource-name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">web-resource-collection</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">user-data-constraint</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">transport-guarantee</span>&gt;</span>CONFIDENTIAL<span class="tag">&lt;/<span class="name">transport-guarantee</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">user-data-constraint</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">security-constraint</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="（2）、JS监听"><a href="#（2）、JS监听" class="headerlink" title="（2）、JS监听"></a>（2）、JS监听</h3><p>在对应的页面html最开始添加下面的js代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;script type=<span class="string">"type/javascript"</span>&gt;</div><div class="line">	<span class="keyword">var</span> url=<span class="built_in">window</span>.location.href;</div><div class="line">	<span class="keyword">if</span> (url.indexOf(<span class="string">"https"</span>)&lt;<span class="number">0</span>) &#123;</div><div class="line">		url=url.replace(<span class="string">"http"</span>, <span class="string">"https"</span>);</div><div class="line">		<span class="built_in">window</span>.location.replace(url);</div><div class="line">	&#125;;</div><div class="line"><span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure>
+<h1 id="四、APP配置（安卓端）"><a href="#四、APP配置（安卓端）" class="headerlink" title="四、APP配置（安卓端）"></a>四、APP配置（安卓端）</h1><blockquote>
+<p>参考文档：<a href="http://www.cnblogs.com/punkisnotdead/p/4788199.html" target="_blank" rel="external">http://www.cnblogs.com/punkisnotdead/p/4788199.html</a></p>
+<h2 id="1、Volley启用https支持"><a href="#1、Volley启用https支持" class="headerlink" title="1、Volley启用https支持"></a>1、Volley启用https支持</h2><h3 id="（1）、修改Volley源码"><a href="#（1）、修改Volley源码" class="headerlink" title="（1）、修改Volley源码"></a>（1）、修改Volley源码</h3></blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> android.content.Context;</div><div class="line"><span class="keyword">import</span> android.content.pm.PackageInfo;</div><div class="line"><span class="keyword">import</span> android.content.pm.PackageManager.NameNotFoundException;</div><div class="line"><span class="keyword">import</span> android.net.http.AndroidHttpClient;</div><div class="line"><span class="keyword">import</span> android.os.Build;</div><div class="line"><span class="keyword">import</span> android.util.Log;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.android.volley.Network;</div><div class="line"><span class="keyword">import</span> com.android.volley.RequestQueue;</div><div class="line"><span class="keyword">import</span> com.android.volley.toolbox.BasicNetwork;</div><div class="line"><span class="keyword">import</span> com.android.volley.toolbox.DiskBasedCache;</div><div class="line"><span class="keyword">import</span> com.android.volley.toolbox.HttpClientStack;</div><div class="line"><span class="keyword">import</span> com.android.volley.toolbox.HttpStack;</div><div class="line"><span class="keyword">import</span> com.android.volley.toolbox.HurlStack;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.http.client.HttpClient;</div><div class="line"><span class="keyword">import</span> org.apache.http.conn.scheme.PlainSocketFactory;</div><div class="line"><span class="keyword">import</span> org.apache.http.conn.scheme.Scheme;</div><div class="line"><span class="keyword">import</span> org.apache.http.conn.scheme.SchemeRegistry;</div><div class="line"><span class="keyword">import</span> org.apache.http.impl.client.DefaultHttpClient;</div><div class="line"><span class="keyword">import</span> org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;</div><div class="line"><span class="keyword">import</span> org.apache.http.params.BasicHttpParams;</div><div class="line"><span class="keyword">import</span> org.apache.http.params.HttpParams;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.File;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"><span class="keyword">import</span> java.security.KeyManagementException;</div><div class="line"><span class="keyword">import</span> java.security.KeyStore;</div><div class="line"><span class="keyword">import</span> java.security.KeyStoreException;</div><div class="line"><span class="keyword">import</span> java.security.NoSuchAlgorithmException;</div><div class="line"><span class="keyword">import</span> java.security.UnrecoverableKeyException;</div><div class="line"><span class="keyword">import</span> java.security.cert.Certificate;</div><div class="line"><span class="keyword">import</span> java.security.cert.CertificateException;</div><div class="line"><span class="keyword">import</span> java.security.cert.CertificateFactory;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.net.ssl.SSLContext;</div><div class="line"><span class="keyword">import</span> javax.net.ssl.SSLSocketFactory;</div><div class="line"><span class="keyword">import</span> javax.net.ssl.TrustManagerFactory;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Volley</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Default on-disk cache directory.</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DEFAULT_CACHE_DIR = <span class="string">"volley"</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> BasicNetwork network;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> RequestQueue queue;</div><div class="line">    <span class="keyword">private</span> Context mContext;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Creates a default instance of the worker pool and calls &#123;<span class="doctag">@link</span> RequestQueue#start()&#125; on it.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> context A &#123;<span class="doctag">@link</span> Context&#125; to use for creating the cache dir.</div><div class="line">     * <span class="doctag">@param</span> stack   An &#123;<span class="doctag">@link</span> HttpStack&#125; to use for the network, or null for default.</div><div class="line">     * <span class="doctag">@return</span> A started &#123;<span class="doctag">@link</span> RequestQueue&#125; instance.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> RequestQueue <span class="title">newRequestQueue</span><span class="params">(Context context, HttpStack stack, <span class="keyword">boolean</span> selfSignedCertificate, <span class="keyword">int</span> rawId)</span> </span>&#123;</div><div class="line">        File cacheDir = <span class="keyword">new</span> File(context.getCacheDir(), DEFAULT_CACHE_DIR);</div><div class="line"></div><div class="line">        String userAgent = <span class="string">"volley/0"</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            String packageName = context.getPackageName();</div><div class="line">            PackageInfo info = context.getPackageManager().getPackageInfo(packageName, <span class="number">0</span>);</div><div class="line">            userAgent = packageName + <span class="string">"/"</span> + info.versionCode;</div><div class="line">        &#125; <span class="keyword">catch</span> (NameNotFoundException e) &#123;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (stack == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= <span class="number">9</span>) &#123;</div><div class="line">                <span class="keyword">if</span> (selfSignedCertificate) &#123;</div><div class="line">                    stack = <span class="keyword">new</span> HurlStack(<span class="keyword">null</span>, buildSSLSocketFactory(context, rawId));</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    stack = <span class="keyword">new</span> HurlStack();</div><div class="line">                &#125;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="comment">// Prior to Gingerbread, HttpUrlConnection was unreliable.</span></div><div class="line">                <span class="comment">// See: http://android-developers.blogspot.com/2011/09/androids-http-clients.html</span></div><div class="line">                <span class="keyword">if</span> (selfSignedCertificate)</div><div class="line">                    stack = <span class="keyword">new</span> HttpClientStack(getHttpClient(context, rawId));</div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    stack = <span class="keyword">new</span> HttpClientStack(AndroidHttpClient.newInstance(userAgent));</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Network network = <span class="keyword">new</span> BasicNetwork(stack);</div><div class="line"></div><div class="line">        RequestQueue queue = <span class="keyword">new</span> RequestQueue(<span class="keyword">new</span> DiskBasedCache(cacheDir), network);</div><div class="line">        queue.start();</div><div class="line"></div><div class="line">        <span class="keyword">return</span> queue;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Creates a default instance of the worker pool and calls &#123;<span class="doctag">@link</span> RequestQueue#start()&#125; on it.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> context A &#123;<span class="doctag">@link</span> Context&#125; to use for creating the cache dir.</div><div class="line">     * <span class="doctag">@return</span> A started &#123;<span class="doctag">@link</span> RequestQueue&#125; instance.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> RequestQueue <span class="title">newRequestQueue</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> newRequestQueue(context, <span class="keyword">null</span>, <span class="keyword">false</span>, <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> SSLSocketFactory <span class="title">buildSSLSocketFactory</span><span class="params">(Context context, <span class="keyword">int</span> certRawResId)</span> </span>&#123;</div><div class="line">        KeyStore keyStore = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            keyStore = buildKeyStore(context, certRawResId);</div><div class="line">        &#125; <span class="keyword">catch</span> (KeyStoreException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (CertificateException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();</div><div class="line">        TrustManagerFactory tmf = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            tmf = TrustManagerFactory.getInstance(tmfAlgorithm);</div><div class="line">            tmf.init(keyStore);</div><div class="line"></div><div class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (KeyStoreException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        SSLContext sslContext = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            sslContext = SSLContext.getInstance(<span class="string">"TLS"</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            sslContext.init(<span class="keyword">null</span>, tmf.getTrustManagers(), <span class="keyword">null</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (KeyManagementException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> sslContext.getSocketFactory();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> HttpClient <span class="title">getHttpClient</span><span class="params">(Context context, <span class="keyword">int</span> certRawResId)</span> </span>&#123;</div><div class="line">        KeyStore keyStore = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            keyStore = buildKeyStore(context, certRawResId);</div><div class="line">        &#125; <span class="keyword">catch</span> (KeyStoreException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (CertificateException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (keyStore != <span class="keyword">null</span>) &#123;</div><div class="line">        &#125;</div><div class="line">        org.apache.http.conn.ssl.SSLSocketFactory sslSocketFactory = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            sslSocketFactory = <span class="keyword">new</span> org.apache.http.conn.ssl.SSLSocketFactory(keyStore);</div><div class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (KeyManagementException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (KeyStoreException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (UnrecoverableKeyException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        HttpParams params = <span class="keyword">new</span> BasicHttpParams();</div><div class="line"></div><div class="line">        SchemeRegistry schemeRegistry = <span class="keyword">new</span> SchemeRegistry();</div><div class="line">        schemeRegistry.register(<span class="keyword">new</span> Scheme(<span class="string">"http"</span>, PlainSocketFactory.getSocketFactory(), <span class="number">80</span>));</div><div class="line">        schemeRegistry.register(<span class="keyword">new</span> Scheme(<span class="string">"https"</span>, sslSocketFactory, <span class="number">443</span>));</div><div class="line"></div><div class="line">        ThreadSafeClientConnManager cm = <span class="keyword">new</span> ThreadSafeClientConnManager(params, schemeRegistry);</div><div class="line"></div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DefaultHttpClient(cm, params);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> KeyStore <span class="title">buildKeyStore</span><span class="params">(Context context, <span class="keyword">int</span> certRawResId)</span> <span class="keyword">throws</span> KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException </span>&#123;</div><div class="line">        String keyStoreType = KeyStore.getDefaultType();</div><div class="line">        KeyStore keyStore = KeyStore.getInstance(keyStoreType);</div><div class="line">        keyStore.load(<span class="keyword">null</span>, <span class="keyword">null</span>);</div><div class="line"></div><div class="line">        Certificate cert = readCert(context, certRawResId);</div><div class="line">        keyStore.setCertificateEntry(<span class="string">"ca"</span>, cert);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> keyStore;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Certificate <span class="title">readCert</span><span class="params">(Context context, <span class="keyword">int</span> certResourceID)</span> </span>&#123;</div><div class="line">        InputStream inputStream = context.getResources().openRawResource(certResourceID);</div><div class="line">        Certificate ca = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        CertificateFactory cf = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            cf = CertificateFactory.getInstance(<span class="string">"X.509"</span>);</div><div class="line">            ca = cf.generateCertificate(inputStream);</div><div class="line"></div><div class="line">        &#125; <span class="keyword">catch</span> (CertificateException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> ca;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="（2）、使用for-other-server的证书（juemuren-crt），将证书放在raw文件夹下，RequestQueue按下面获取"><a href="#（2）、使用for-other-server的证书（juemuren-crt），将证书放在raw文件夹下，RequestQueue按下面获取" class="headerlink" title="（2）、使用for other server的证书（juemuren.crt），将证书放在raw文件夹下，RequestQueue按下面获取"></a>（2）、使用for other server的证书（juemuren.crt），将证书放在raw文件夹下，RequestQueue按下面获取</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">RequestQueue mQueue= Volley.newRequestQueue(context, <span class="keyword">null</span>, <span class="keyword">true</span>, R.raw.juemuren);</div></pre></td></tr></table></figure>
+<h3 id="（3）、StringRequest延长超时时长"><a href="#（3）、StringRequest延长超时时长" class="headerlink" title="（3）、StringRequest延长超时时长"></a>（3）、StringRequest延长超时时长</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">StringRequest request=<span class="keyword">new</span> StringRequest();</div><div class="line">request.setRetryPolicy(<span class="keyword">new</span> DefaultRetryPolicy(<span class="number">30</span> * <span class="number">1000</span>, <span class="number">2</span>, <span class="number">1.0f</span>))</div></pre></td></tr></table></figure>
+<h2 id="2、兼容旧版本"><a href="#2、兼容旧版本" class="headerlink" title="2、兼容旧版本"></a>2、兼容旧版本</h2><p>新版本的接口全换成https的，要想兼容旧版本，服务器配置http跳转https的监听可以设置为js版本的监听。</p>
+<p>完成以上设置之后，就可以愉快的用Https访问网站了，enjoy~</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Https/" rel="tag">#Https</a>
+          
+            <a href="/tags/Http/" rel="tag">#Http</a>
+          
+            <a href="/tags/Volley/" rel="tag">#Volley</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/21/支付宝APP支付集成文档/" rel="next" title="支付宝APP支付集成文档">
+                <i class="fa fa-chevron-left"></i> 支付宝APP支付集成文档
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/02/16/升级Https的那些事/"
+           data-title="升级Https的那些事" data-url="https://juemuren4449.com/2017/02/16/升级Https的那些事/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/mouse.jpg"
+               alt="juemuren4449" />
+          <p class="site-author-name" itemprop="name">juemuren4449</p>
+          <p class="site-description motion-element" itemprop="description">Android开发一枚</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/juemuren4449" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/juemuren4449" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、为什么升级Https"><span class="nav-text">一、为什么升级Https</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、苹果iOS强制开启ATS标准"><span class="nav-text">1、苹果iOS强制开启ATS标准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、Http协议无法加密数据"><span class="nav-text">2、Http协议无法加密数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、证书申请"><span class="nav-text">二、证书申请</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、货比三家"><span class="nav-text">1、货比三家</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）、赛门铁克"><span class="nav-text">（1）、赛门铁克</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）、沃通"><span class="nav-text">（2）、沃通</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（3）、免费SSL"><span class="nav-text">（3）、免费SSL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、购买"><span class="nav-text">2、购买</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、服务器配置证书（基于Wildfly（Jboss））"><span class="nav-text">三、服务器配置证书（基于Wildfly（Jboss））</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、配置证书"><span class="nav-text">1、配置证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、配置https监听"><span class="nav-text">2、配置https监听</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、设置http跳转https"><span class="nav-text">3、设置http跳转https</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）、全局自动监听"><span class="nav-text">（1）、全局自动监听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）、JS监听"><span class="nav-text">（2）、JS监听</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、APP配置（安卓端）"><span class="nav-text">四、APP配置（安卓端）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、Volley启用https支持"><span class="nav-text">1、Volley启用https支持</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）、修改Volley源码"><span class="nav-text">（1）、修改Volley源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）、使用for-other-server的证书（juemuren-crt），将证书放在raw文件夹下，RequestQueue按下面获取"><span class="nav-text">（2）、使用for other server的证书（juemuren.crt），将证书放在raw文件夹下，RequestQueue按下面获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（3）、StringRequest延长超时时长"><span class="nav-text">（3）、StringRequest延长超时时长</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、兼容旧版本"><span class="nav-text">2、兼容旧版本</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">juemuren4449</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"juemuren4449"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("04oKQQMvdHYFw2mSSmuLqNg1-gzGzoHsz", "21xOoFQmLbKxX3EELvxddk3X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
