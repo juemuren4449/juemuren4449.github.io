@@ -1,0 +1,976 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="FCM,GCM,消息推送,谷歌," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一、Firebase Cloud Messaging简介参考文档：https://firebase.google.com/docs/cloud-messaging/
+1、引入说起Firebase Cloud Messaging（简称FCM），可能多数人都不知道，但是说起GCM（Google Cloud Messaging）想必安卓开发人员都了解，虽然目前国内的安卓设备都阉割了谷歌服务导致GCM并不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Firebase Cloud Messaging接入文档">
+<meta property="og:url" content="https://juemuren4449.com/2017/03/20/Firebase Cloud Messaging接入文档/index.html">
+<meta property="og:site_name" content="掘墓人">
+<meta property="og:description" content="一、Firebase Cloud Messaging简介参考文档：https://firebase.google.com/docs/cloud-messaging/
+1、引入说起Firebase Cloud Messaging（简称FCM），可能多数人都不知道，但是说起GCM（Google Cloud Messaging）想必安卓开发人员都了解，虽然目前国内的安卓设备都阉割了谷歌服务导致GCM并不">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8ed3a39bly1fds7nn6n3sj20id0aawfi.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8ed3a39bly1fdsj8tp6hnj20co0b8glm.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8ed3a39bly1fdsjcvxcbvj20w60cwjs4.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8ed3a39bly1fdsjg19fgij20jc0hiwf5.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8ed3a39bly1fdsjjya9kzj20ja0g7t9w.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8ed3a39bly1fdsjy3k5e4j20iw0g9q3p.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8ed3a39bly1fdsk8zwxjij210u0epwf8.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8ed3a39bly1fdskfpbjlpj20ys0cy74v.jpg">
+<meta property="og:updated_time" content="2017-03-19T16:14:53.187Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Firebase Cloud Messaging接入文档">
+<meta name="twitter:description" content="一、Firebase Cloud Messaging简介参考文档：https://firebase.google.com/docs/cloud-messaging/
+1、引入说起Firebase Cloud Messaging（简称FCM），可能多数人都不知道，但是说起GCM（Google Cloud Messaging）想必安卓开发人员都了解，虽然目前国内的安卓设备都阉割了谷歌服务导致GCM并不">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/8ed3a39bly1fds7nn6n3sj20id0aawfi.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Firebase Cloud Messaging接入文档 | 掘墓人 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?a0455cf37dbfbb725cfd74fa9e1d3eaf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">掘墓人</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Where my world build.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Firebase Cloud Messaging接入文档
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-20T00:09:17+08:00" content="2017-03-20">
+              2017-03-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/第三方集成/" itemprop="url" rel="index">
+                    <span itemprop="name">第三方集成</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/20/Firebase Cloud Messaging接入文档/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/20/Firebase Cloud Messaging接入文档/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/20/Firebase Cloud Messaging接入文档/" class="leancloud_visitors" data-flag-title="Firebase Cloud Messaging接入文档">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、Firebase-Cloud-Messaging简介"><a href="#一、Firebase-Cloud-Messaging简介" class="headerlink" title="一、Firebase Cloud Messaging简介"></a>一、Firebase Cloud Messaging简介</h1><p>参考文档：<a href="https://firebase.google.com/docs/cloud-messaging/" target="_blank" rel="external">https://firebase.google.com/docs/cloud-messaging/</a></p>
+<h2 id="1、引入"><a href="#1、引入" class="headerlink" title="1、引入"></a>1、引入</h2><p>说起Firebase Cloud Messaging（简称FCM），可能多数人都不知道，但是说起GCM（Google Cloud Messaging）想必安卓开发人员都了解，虽然目前国内的安卓设备都阉割了谷歌服务导致GCM并不能正常使用，但是GCM的知名度还是有的。<br><a id="more"></a></p>
+<h2 id="2、工作原理"><a href="#2、工作原理" class="headerlink" title="2、工作原理"></a>2、工作原理</h2><p>即使关闭了苹果手机的软件，手机依然可以收到软件推送的消息，原因就是该消息是从软件的服务器经由苹果的服务器转发到苹果手机上的，而GCM的作用跟该苹果的推送原理类似，软件服务器将消息交给谷歌服务器，谷歌的服务器将消息推送到安卓设备上，可以极大的减少无用软件的唤醒，降低手机耗电量。</p>
+<h2 id="3、现状"><a href="#3、现状" class="headerlink" title="3、现状"></a>3、现状</h2><p>由于谷歌在国内被屏蔽访问，国内的大部分手机都阉割了谷歌服务，这就导致了GCM不可用，各大厂商都想方设法保持自己的软件在安卓设备上处于活动状态，便于及时将各种消息推送到安卓设备上，导致人们对安卓的印象就是卡顿和耗电，这跟GCM的不可用有极大关系。</p>
+<p>由于公司业务需要，要做国外运营的软件，所以就需要接入GCM，上谷歌查询文档，发现官方已经不再推荐开发者使用GCM了，而推荐更为强大的FCM，可以认为FCM是GCM的改进版或者加强版。</p>
+<h1 id="二、接入准备工作"><a href="#二、接入准备工作" class="headerlink" title="二、接入准备工作"></a>二、接入准备工作</h1><h2 id="1、开发设备"><a href="#1、开发设备" class="headerlink" title="1、开发设备"></a>1、开发设备</h2><p>装有谷歌服务器的安卓手机一台  </p>
+<h2 id="2、开发环境"><a href="#2、开发环境" class="headerlink" title="2、开发环境"></a>2、开发环境</h2><p>Android Studio  </p>
+<h2 id="3、控制台设置"><a href="#3、控制台设置" class="headerlink" title="3、控制台设置"></a>3、控制台设置</h2><h3 id="（1）、创建应用"><a href="#（1）、创建应用" class="headerlink" title="（1）、创建应用"></a>（1）、创建应用</h3><p>打开Firebase控制台：<a href="https://console.firebase.google.com/" target="_blank" rel="external">https://console.firebase.google.com/</a><br>点击<code>新建项目</code><br><img src="https://ws1.sinaimg.cn/large/8ed3a39bly1fds7nn6n3sj20id0aawfi.jpg" alt="新建项目"></p>
+<h3 id="（2）、填写项目名称"><a href="#（2）、填写项目名称" class="headerlink" title="（2）、填写项目名称"></a>（2）、填写项目名称</h3><p>在弹出的窗口填写项目名称，然后点击<code>创建项目</code><br><img src="https://ws1.sinaimg.cn/large/8ed3a39bly1fdsj8tp6hnj20co0b8glm.jpg" alt="填写项目名称"></p>
+<h3 id="（3）、集成Firebase到安卓"><a href="#（3）、集成Firebase到安卓" class="headerlink" title="（3）、集成Firebase到安卓"></a>（3）、集成Firebase到安卓</h3><p>在<code>Overview</code>选项中点击<code>将Firebase添加到您的Android应用</code><br><img src="https://ws1.sinaimg.cn/large/8ed3a39bly1fdsjcvxcbvj20w60cwjs4.jpg" alt="集成Firebase到安卓"></p>
+<h3 id="（4）、填写包名和sha1"><a href="#（4）、填写包名和sha1" class="headerlink" title="（4）、填写包名和sha1"></a>（4）、填写包名和sha1</h3><p>在弹出的窗口中输入项目的<code>包名</code>和<code>sha1</code>，然后点击<code>添加应用</code><br><img src="https://ws1.sinaimg.cn/large/8ed3a39bly1fdsjg19fgij20jc0hiwf5.jpg" alt="填写包名和sha1"></p>
+<h3 id="（5）、下载google-services-json"><a href="#（5）、下载google-services-json" class="headerlink" title="（5）、下载google-services.json"></a>（5）、下载google-services.json</h3><p>创建成功后点击<code>Download google-services.json</code>，然后将项目切换到Project视图，将下载的文件放入到app的根目录<br><img src="https://ws1.sinaimg.cn/large/8ed3a39bly1fdsjjya9kzj20ja0g7t9w.jpg" alt="下载google-services.json"></p>
+<p>PS：切记，添加的sha1如果是debug版，那么正式版的sha1也需要添加进去。点击Overview后面的设置按钮，再选择项目设置，找到常规选项卡，在下方继续添加sha1即可，保存后记得重新下载google-services.json并放到app的根目录中</p>
+<h1 id="三、Android端集成FCM"><a href="#三、Android端集成FCM" class="headerlink" title="三、Android端集成FCM"></a>三、Android端集成FCM</h1><p>参考文档：<a href="https://firebase.google.com/docs/cloud-messaging/android/client" target="_blank" rel="external">https://firebase.google.com/docs/cloud-messaging/android/client</a></p>
+<h2 id="1、修改gradle文件"><a href="#1、修改gradle文件" class="headerlink" title="1、修改gradle文件"></a>1、修改gradle文件</h2><h3 id="（1）、项目级build-gradle"><a href="#（1）、项目级build-gradle" class="headerlink" title="（1）、项目级build.gradle"></a>（1）、项目级build.gradle</h3><p>在项目级的build.gradle文件中的dependencies节点中添加下面代码</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">classpath</span> <span class="string">'com.google.gms:google-services:3.0.0'</span></div></pre></td></tr></table></figure>
+<h3 id="（2）、应用级build-gradle"><a href="#（2）、应用级build-gradle" class="headerlink" title="（2）、应用级build.gradle"></a>（2）、应用级build.gradle</h3><p>在应用级的build.gradle文件中添加依赖</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">compile</span> <span class="string">'com.google.firebase:firebase-messaging:10.0.2'</span></div></pre></td></tr></table></figure>
+<p>将下面的代码放到文件的最后一行</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apply plugin: <span class="string">'com.google.gms.google-services'</span></div></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/8ed3a39bly1fdsjy3k5e4j20iw0g9q3p.jpg" alt="Android集成步骤参考"></p>
+<h2 id="2、创建MyFirebaseInstanceIDService"><a href="#2、创建MyFirebaseInstanceIDService" class="headerlink" title="2、创建MyFirebaseInstanceIDService"></a>2、创建MyFirebaseInstanceIDService</h2><p>在项目中新建MyFirebaseInstanceIDService，继承FirebaseInstanceIdService，并重写下面的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTokenRefresh</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onTokenRefresh();</div><div class="line">    String refreshedToken = FirebaseInstanceId.getInstance().getToken();</div><div class="line">    Log.d(TAG, <span class="string">"Refreshed token: "</span> + refreshedToken);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在清单文件中注册Service</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">service</span> <span class="attr">android:name</span>=<span class="string">".MyFirebaseInstanceIDService"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"com.google.firebase.INSTANCE_ID_EVENT"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="3、MyFirebaseMessagingService"><a href="#3、MyFirebaseMessagingService" class="headerlink" title="3、MyFirebaseMessagingService"></a>3、MyFirebaseMessagingService</h2><p>新建MyFirebaseMessagingService，继承FirebaseMessagingService，重写下面方法  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onMessageReceived</span><span class="params">(RemoteMessage remoteMessage)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onMessageReceived(remoteMessage);</div><div class="line"></div><div class="line">    Log.d(TAG, <span class="string">"From: "</span> + remoteMessage.getFrom());</div><div class="line"></div><div class="line">    <span class="comment">// Check if message contains a data payload.</span></div><div class="line">    <span class="keyword">if</span> (remoteMessage.getData().size() &gt; <span class="number">0</span>) &#123;</div><div class="line">        Log.d(TAG, <span class="string">"Message data payload: "</span> + remoteMessage.getData());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Check if message contains a notification payload.</span></div><div class="line">    <span class="keyword">if</span> (remoteMessage.getNotification() != <span class="keyword">null</span>) &#123;</div><div class="line">        Log.d(TAG, <span class="string">"Message Notification Body: "</span> + remoteMessage.getNotification().getBody());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在清单文件中注册<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">service</span></span></div><div class="line">    <span class="attr">android:name</span>=<span class="string">".MyFirebaseMessagingService"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"com.google.firebase.MESSAGING_EVENT"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h2 id="4、获取token"><a href="#4、获取token" class="headerlink" title="4、获取token"></a>4、获取token</h2><p>在项目中，可以通过下面代码获取设备的token，并将token发送到服务器，便于服务器进行指定设备的消息推送</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">FirebaseInstanceId.getInstance().getToken();</div></pre></td></tr></table></figure>
+<h2 id="5、设置图标和背景色"><a href="#5、设置图标和背景色" class="headerlink" title="5、设置图标和背景色"></a>5、设置图标和背景色</h2><p>在清单文件中添加下面代码，可以分别设置通知的图标和图标的背景色</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta-data</span></span></div><div class="line">    <span class="attr">android:name</span>=<span class="string">"com.google.firebase.messaging.default_notification_icon"</span></div><div class="line">    <span class="attr">android:resource</span>=<span class="string">"@drawable/icon_logo"</span> /&gt;</div><div class="line"><span class="tag">&lt;<span class="name">meta-data</span></span></div><div class="line">    <span class="attr">android:name</span>=<span class="string">"com.google.firebase.messaging.default_notification_color"</span></div><div class="line">    <span class="attr">android:resource</span>=<span class="string">"@color/colorPrimary"</span> /&gt;</div></pre></td></tr></table></figure>
+<h1 id="四、发送消息"><a href="#四、发送消息" class="headerlink" title="四、发送消息"></a>四、发送消息</h1><h2 id="1、控制台发送消息"><a href="#1、控制台发送消息" class="headerlink" title="1、控制台发送消息"></a>1、控制台发送消息</h2><p>在控制台左侧选择Notifications，然后点击写新消息，就可以向指定设备或全部设备发送消息了<br><img src="https://ws1.sinaimg.cn/large/8ed3a39bly1fdsk8zwxjij210u0epwf8.jpg" alt="控制台发送消息"></p>
+<h2 id="2、通过发送post请求发送消息"><a href="#2、通过发送post请求发送消息" class="headerlink" title="2、通过发送post请求发送消息"></a>2、通过发送post请求发送消息</h2><h3 id="（1）、请求地址"><a href="#（1）、请求地址" class="headerlink" title="（1）、请求地址"></a>（1）、请求地址</h3><p>请求的地址为：<a href="https://fcm.googleapis.com/fcm/send" target="_blank" rel="external">https://fcm.googleapis.com/fcm/send</a></p>
+<h3 id="（2）、请求头部"><a href="#（2）、请求头部" class="headerlink" title="（2）、请求头部"></a>（2）、请求头部</h3><p>http头部必须包含两部分<br>Content-Type:application/json<br>Authorization:key=YOUR_SERVER_KEY<br>其中serverkey可以在控制台的设置–项目设置–云消息传递–服务器密钥中获取<br><img src="https://ws1.sinaimg.cn/large/8ed3a39bly1fdskfpbjlpj20ys0cy74v.jpg" alt="获取Server_Key"></p>
+<h2 id="（3）、发送内容"><a href="#（3）、发送内容" class="headerlink" title="（3）、发送内容"></a>（3）、发送内容</h2><p>如果发送通知消息，则发送的内容类似与下面的代码</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123; <span class="attr">"notification"</span>: &#123;</div><div class="line">    <span class="attr">"title"</span>: <span class="string">"Portugal vs. Denmark"</span>,</div><div class="line">    <span class="attr">"text"</span>: <span class="string">"5 to 1"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">"to"</span> : <span class="string">"bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1..."</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中to的值是设备的token  </p>
+<p>更多参数设置可以参考：<a href="https://firebase.google.com/docs/cloud-messaging/concept-options?hl=zh-cn#notifications" target="_blank" rel="external">https://firebase.google.com/docs/cloud-messaging/concept-options?hl=zh-cn#notifications</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/FCM/" rel="tag">#FCM</a>
+          
+            <a href="/tags/GCM/" rel="tag">#GCM</a>
+          
+            <a href="/tags/消息推送/" rel="tag">#消息推送</a>
+          
+            <a href="/tags/谷歌/" rel="tag">#谷歌</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/16/升级Https的那些事/" rel="next" title="升级Https的那些事">
+                <i class="fa fa-chevron-left"></i> 升级Https的那些事
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/20/Firebase Cloud Messaging接入文档/"
+           data-title="Firebase Cloud Messaging接入文档" data-url="https://juemuren4449.com/2017/03/20/Firebase Cloud Messaging接入文档/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/mouse.jpg"
+               alt="juemuren4449" />
+          <p class="site-author-name" itemprop="name">juemuren4449</p>
+          <p class="site-description motion-element" itemprop="description">Android开发一枚</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/juemuren4449" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/juemuren4449" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、Firebase-Cloud-Messaging简介"><span class="nav-text">一、Firebase Cloud Messaging简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、引入"><span class="nav-text">1、引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、工作原理"><span class="nav-text">2、工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、现状"><span class="nav-text">3、现状</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、接入准备工作"><span class="nav-text">二、接入准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、开发设备"><span class="nav-text">1、开发设备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、开发环境"><span class="nav-text">2、开发环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、控制台设置"><span class="nav-text">3、控制台设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）、创建应用"><span class="nav-text">（1）、创建应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）、填写项目名称"><span class="nav-text">（2）、填写项目名称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（3）、集成Firebase到安卓"><span class="nav-text">（3）、集成Firebase到安卓</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（4）、填写包名和sha1"><span class="nav-text">（4）、填写包名和sha1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（5）、下载google-services-json"><span class="nav-text">（5）、下载google-services.json</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、Android端集成FCM"><span class="nav-text">三、Android端集成FCM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、修改gradle文件"><span class="nav-text">1、修改gradle文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）、项目级build-gradle"><span class="nav-text">（1）、项目级build.gradle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）、应用级build-gradle"><span class="nav-text">（2）、应用级build.gradle</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、创建MyFirebaseInstanceIDService"><span class="nav-text">2、创建MyFirebaseInstanceIDService</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、MyFirebaseMessagingService"><span class="nav-text">3、MyFirebaseMessagingService</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、获取token"><span class="nav-text">4、获取token</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、设置图标和背景色"><span class="nav-text">5、设置图标和背景色</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、发送消息"><span class="nav-text">四、发送消息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、控制台发送消息"><span class="nav-text">1、控制台发送消息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、通过发送post请求发送消息"><span class="nav-text">2、通过发送post请求发送消息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）、请求地址"><span class="nav-text">（1）、请求地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）、请求头部"><span class="nav-text">（2）、请求头部</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（3）、发送内容"><span class="nav-text">（3）、发送内容</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">juemuren4449</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"juemuren4449"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("04oKQQMvdHYFw2mSSmuLqNg1-gzGzoHsz", "21xOoFQmLbKxX3EELvxddk3X");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
